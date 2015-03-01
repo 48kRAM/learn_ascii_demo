@@ -6,3 +6,9 @@ This is a browser-based "kiosk" app where kids learning ASCII can enter their na
 I wrote this app for use in the "Computer Science" display at a local elementary school science expo day.
 
 For best results, the kiosk should be equipped with only a numeric keypad - this prevents the entering of letters, etc. You can buy USB numeric keyboards at most office supply stores.
+
+Credits
+-------
+
+Background image courtesy of freevectors.me
+http://www.freevectors.me/circuit-board-rainbow-background.html

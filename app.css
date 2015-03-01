@@ -1,26 +1,28 @@
 body {
-	background: #ccc;
+	background-color: #ccc;
+	background-image: url('images/circuit-board-rainbow.jpg');
+	background-size: 100%;
 }
 div #container {
-	background-color: #eee;
 	width: 100%;
-	border: 5px solid #f00;
 }
 div #entry {
-	width: 20%;
+	background-color: #eee;
+	width: 25%;
 	height: 100px;
 	margin-left: 80%;
 	position: absolute;
-	top: 20px;
+	bottom: 30px;
 	right: 20px;
 	border: 2px solid #222;
 	padding: 3px;
 }
 
-div #history {
+div #histframe {
+	background-color: rgba(240,240,240,0.8);
 	border: 2px solid #222;
-	margin: 10px;
+	margin: 20px;
 	padding: 5px;
 	height: 90vh;
-	margin-right: 30%;
+	margin-right: 35%;
 }
