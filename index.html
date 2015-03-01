@@ -7,6 +7,7 @@
   <script language="JavaScript">
 
   var asciiCode;
+  var asciiString = [];
 
   function listPreviousNames() {
      var histList=document.getElementById('history');
@@ -25,10 +26,12 @@
      if(codeName==="clear all") {
      	 localStorage['history']='';
      } else {
-	 newString=codeName+" - "+readableName;
+	 newString=asciiString.join(' ')+" - "+readableName;
 	 localStorage['history'] = localStorage['history']+":"+newString;
      }
      document.getElementById('fNew').value='';
+     asciiString.length=0;
+     asciiCode='';
      
   }
   function submitenter(myfield, e) {
@@ -45,16 +48,32 @@
         return false;
      } else if (keycode == 8) {
         // Backspace or delete
+	if(asciiCode.length==0) {
+	    // Remove the previous character from preview and
+	    //  the asciiString stack
+	    p.innerHTML=p.innerHTML.slice(0, -1);
+	    if(asciiString.length>0) {
+	        asciiCode=asciiString.pop().slice(0, -1);
+	    } else {
+	        asciiCode='';
+	    }
+	} else {
+	    // Remove the last character from an incomplete code
+	    asciiCode=asciiCode.slice(0, -1);
+	}
      } else {
         // Process ASCII values entered as decimal
 	asciiCode=asciiCode+String.fromCharCode(keycode);
 	var decValue=parseInt(asciiCode);
-	if (decValue>60) {
+	if (decValue>=32) {
 	    p.innerHTML=p.innerHTML + String.fromCharCode(decValue);
+	    asciiString.push(asciiCode);
 	    asciiCode='';
 	}
-     	return true;
      }
+     // DEBUGGING code
+     //document.getElementById('show').innerHTML=asciiCode;
+     return true;
   }
   function StartPage() {
       asciiCode='';
@@ -80,7 +99,11 @@
   onkeypress="return submitenter(this, event)">
 <b>Enter your name:</b> <br/><br/>
 <input type="text" name="newName" id="fNew" />
+<br/>
+<br/>
 </form>
+<div id="show">
+</div>
 
 </div>
 
