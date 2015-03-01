@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ASCII Names</title>
+  <link rel="stylesheet" type="text/css" href="app.css">
+  <script language="JavaScript">
+
+  var asciiCode;
+
+  function listPreviousNames() {
+     var histList=document.getElementById('history');
+     histList.innerHTML='';
+     hList=localStorage['history'].split(':');
+     for (var i=0; i<hList.length; i++) {
+     	var name=hList[i];
+	var addThis="<p>"+name+"</p>";
+	histList.innerHTML = histList.innerHTML + addThis;
+     }
+
+  }
+  function addName() {
+     var readableName=document.getElementById('preview').innerHTML;
+     var codeName=document.getElementById('fNew').value;
+     if(codeName==="clear all") {
+     	 localStorage['history']='';
+     } else {
+	 newString=codeName+" - "+readableName;
+	 localStorage['history'] = localStorage['history']+":"+newString;
+     }
+     document.getElementById('fNew').value='';
+     
+  }
+  function submitenter(myfield, e) {
+     var keycode;
+     var p=document.getElementById('preview');
+     if (window.event) keycode = window.event.keyCode;
+     else if (e) keycode = e.which;
+     else return true;
+     if (keycode == 13) {
+        // Enter key submits the new name
+	addName();
+	listPreviousNames();
+	p.innerHTML='';
+        return false;
+     } else if (keycode == 8) {
+        // Backspace or delete
+     } else {
+        // Process ASCII values entered as decimal
+	asciiCode=asciiCode+String.fromCharCode(keycode);
+	var decValue=parseInt(asciiCode);
+	if (decValue>60) {
+	    p.innerHTML=p.innerHTML + String.fromCharCode(decValue);
+	    asciiCode='';
+	}
+     	return true;
+     }
+  }
+  function StartPage() {
+      asciiCode='';
+      listPreviousNames();
+      // FIXME
+      localStorage['history']='';
+  }
+
+  </script>
+</head>
+<body onLoad="StartPage()">
+<div id="container">
+<b>Previous names:</b><br/>
+<div id="history">
+
+</div>
+
+<div id="entry">
+<div id="preview">
+</div>
+
+<form id="entryForm" action="#" method="post"
+  onkeypress="return submitenter(this, event)">
+<b>Enter your name:</b> <br/><br/>
+<input type="text" name="newName" id="fNew" />
+</form>
+
+</div>
+
+</div> <!-- container -->
+</body>
+</html>
+

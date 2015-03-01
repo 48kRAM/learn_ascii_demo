@@ -1,0 +1,26 @@
+body {
+	background: #ccc;
+}
+div #container {
+	background-color: #eee;
+	width: 100%;
+	border: 5px solid #f00;
+}
+div #entry {
+	width: 20%;
+	height: 100px;
+	margin-left: 80%;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	border: 2px solid #222;
+	padding: 3px;
+}
+
+div #history {
+	border: 2px solid #222;
+	margin: 10px;
+	padding: 5px;
+	height: 90vh;
+	margin-right: 30%;
+}
