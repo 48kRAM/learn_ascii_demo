@@ -7,6 +7,8 @@ I wrote this app for use in the "Computer Science" display at a local elementary
 
 For best results, the kiosk should be equipped with only a numeric keypad - this prevents the entering of letters, etc. You can buy USB numeric keyboards at most office supply stores.
 
+The included worksheet is intended as a handout that should be completed before using the kisok app. The worksheet contains the printable ASCII table of letters as well as some common punctuation. This worksheet is in "flat open-document" format and must be edited with LibreOffice (http://www.libreoffice.org)
+
 Credits
 -------
 
