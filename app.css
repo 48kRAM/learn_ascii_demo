@@ -3,6 +3,11 @@ body {
 	background-image: url('images/circuit-board-rainbow.jpg');
 	background-size: 100%;
 }
+.marquee {
+	width: 100%;
+	text-align: center;
+	font-size: 1.4em;
+}
 div #container {
 	width: 100%;
 }
