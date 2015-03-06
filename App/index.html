@@ -31,17 +31,17 @@ SOFTWARE.
 
   var asciiCode;
   var asciiString = [];
+  var namesList = [];
 
   function listPreviousNames() {
      var histList=document.getElementById('history');
      histList.innerHTML='';
-     hList=localStorage['history'].split(':');
+     hList=JSON.parse(localStorage['history']);
      for (var i=0; i<hList.length; i++) {
      	var name=hList[i];
 	var addThis="<p>"+name+"</p>";
 	histList.innerHTML = histList.innerHTML + addThis;
      }
-
   }
   function addName() {
      var readableName=document.getElementById('preview').innerHTML;
@@ -49,8 +49,9 @@ SOFTWARE.
      if(codeName==="clear all") {
      	 localStorage['history']='';
      } else {
-	 newString=asciiString.join(' ')+" - "+readableName;
-	 localStorage['history'] = localStorage['history']+":"+newString;
+	 newString=readableName+" - "+asciiString.join(' ');
+	 namesList.push(newString);
+	 localStorage['history'] = JSON.stringify(namesList);
      }
      document.getElementById('fNew').value='';
      asciiString.length=0;
@@ -98,11 +99,14 @@ SOFTWARE.
      //document.getElementById('show').innerHTML=asciiCode;
      return true;
   }
+  function loadNamesList() {
+      namesList=JSON.parse(localStorage['history']);
+  }
   function StartPage() {
       asciiCode='';
+      loadNamesList();
+      loadNamesList();
       listPreviousNames();
-      // FIXME
-      localStorage['history']='';
   }
 
   </script>

@@ -21,13 +21,15 @@ div #entry {
 	right: 20px;
 	border: 2px solid #222;
 	padding: 3px;
+	font-size: 1.2em;
 }
 
 div #histframe {
 	background-color: rgba(240,240,240,0.8);
 	border: 2px solid #222;
 	margin: 20px;
-	padding: 5px;
+	padding: 8px;
 	height: 90vh;
 	margin-right: 35%;
+	font-size: 1.3em;
 }
