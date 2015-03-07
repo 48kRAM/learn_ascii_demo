@@ -46,6 +46,8 @@ div #history {
 	overflow: scroll;
 	overflow: -moz-scrollbars-none;
 	height: 90%;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 0.9em;
 }
 div #history::-webkit-scrollbar {
 	width: 0 !important;
