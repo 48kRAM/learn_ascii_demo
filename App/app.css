@@ -13,7 +13,7 @@ div #container {
 }
 div #entry {
 	background-color: #eee;
-	width: 25%;
+	width: 27%;
 	height: 100px;
 	margin-left: 80%;
 	position: absolute;
@@ -23,13 +23,23 @@ div #entry {
 	padding: 3px;
 	font-size: 1.2em;
 }
-
 div #histframe {
 	background-color: rgba(240,240,240,0.8);
 	border: 2px solid #222;
 	margin: 20px;
 	padding: 8px;
 	height: 90vh;
-	margin-right: 35%;
+	margin-right: 33%;
 	font-size: 1.3em;
+}
+div #history {
+	overflow: scroll;
+	overflow: -moz-scrollbars-none;
+	height: 90%;
+}
+div #history::-webkit-scrollbar {
+	width: 0 !important;
+}
+div #history p {
+	margin: 4px;
 }

@@ -42,10 +42,14 @@ SOFTWARE.
 	var addThis="<p>"+name+"</p>";
 	histList.innerHTML = histList.innerHTML + addThis;
      }
+     histList.scrollTop = histList.scrollHeight;
   }
   function addName() {
      var readableName=document.getElementById('preview').innerHTML;
      var codeName=document.getElementById('fNew').value;
+     if(codeName.length<2) {
+     	return;
+     }
      if(codeName==="clear all") {
      	 localStorage['history']='';
      } else {
@@ -120,7 +124,7 @@ SOFTWARE.
 <br/>
 <div id="history">
 </div>
-</div>
+</div><!-- histframe -->
 
 <!-- Place where kids enter their name -->
 <div id="entry">
