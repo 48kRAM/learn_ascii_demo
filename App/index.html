@@ -93,7 +93,7 @@ SOFTWARE.
         // Process ASCII values entered as decimal
 	asciiCode=asciiCode+String.fromCharCode(keycode);
 	var decValue=parseInt(asciiCode);
-	if (decValue>=32) {
+	if (decValue>=32 && decValue <=122) {
 	    p.innerHTML=p.innerHTML + String.fromCharCode(decValue);
 	    asciiString.push(asciiCode);
 	    asciiCode='';
