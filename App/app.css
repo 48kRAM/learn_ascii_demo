@@ -24,7 +24,7 @@ div #instructions {
 div #entry {
 	background-color: #eee;
 	width: 27%;
-	height: 100px;
+	height: 130px;
 	margin-left: 80%;
 	position: absolute;
 	bottom: 30px;
@@ -32,6 +32,7 @@ div #entry {
 	border: 2px solid #222;
 	padding: 4px;
 	font-size: 1.2em;
+	overflow: hidden;
 }
 div #histframe {
 	background-color: rgba(240,240,240,0.8);
