@@ -33,17 +33,32 @@ SOFTWARE.
   var asciiString = [];
   var namesList = [];
 
+  // Remove a name from the history list by clicking on it. Useful
+  //  if a student makes a mistake, enters profanity, etc.
+  function removeName(x) {
+     var toRemove=namesList[x].split(" - ", 1);
+     var yorn = confirm("Really remove "+toRemove[0]+" from the list?");
+     if (yorn) {
+	 var nukedName = namesList.splice(x, 1);
+	 localStorage['history'] = JSON.stringify(namesList);
+	 listPreviousNames();
+     }
+  }
+
+  // Re-draws the history list from stored namesList array
   function listPreviousNames() {
      var histList=document.getElementById('history');
      histList.innerHTML='';
-     hList=JSON.parse(localStorage['history']);
-     for (var i=0; i<hList.length; i++) {
-     	var name=hList[i];
-	var addThis="<p>"+name+"</p>";
+     for (var i=0; i < namesList.length; i++) {
+     	var name=namesList[i];
+	var addThis="<p onclick='removeName("+i+")'>"+name+"</p>";
 	histList.innerHTML = histList.innerHTML + addThis;
      }
      histList.scrollTop = histList.scrollHeight;
   }
+
+  // Adds a name to the stored array. A proctor can use an alpha
+  //  keyboard to enter "clear all" to reset the history list.
   function addName() {
      var readableName=document.getElementById('preview').innerHTML;
      var codeName=document.getElementById('fNew').value;
@@ -60,8 +75,9 @@ SOFTWARE.
      document.getElementById('fNew').value='';
      asciiString.length=0;
      asciiCode='';
-     
   }
+
+  // Handles input from the ascii entry field.
   function submitenter(myfield, e) {
      var keycode;
      var p=document.getElementById('preview');
@@ -103,12 +119,14 @@ SOFTWARE.
      //document.getElementById('show').innerHTML=asciiCode;
      return true;
   }
+
+  // Loads a saved namesList array from HTML local storage. This
+  //  allows the history to persist across reboots or browser closes.
   function loadNamesList() {
       namesList=JSON.parse(localStorage['history']);
   }
   function StartPage() {
       asciiCode='';
-      loadNamesList();
       loadNamesList();
       listPreviousNames();
   }
