@@ -29,8 +29,6 @@ SOFTWARE.
   <link rel="stylesheet" type="text/css" href="app.css">
   <script language="JavaScript">
 
-  var asciiCode;
-  var asciiString = [];
   var namesList = [];
 
   // Remove a name from the history list by clicking on it. Useful
@@ -60,64 +58,20 @@ SOFTWARE.
   // Adds a name to the stored array. A proctor can use an alpha
   //  keyboard to enter "clear all" to reset the history list.
   function addName() {
-     var readableName=document.getElementById('preview').innerHTML;
-     var codeName=document.getElementById('fNew').value;
+     console.log("Adding a name to the board");
+     var codeName=document.getElementById('codeinput').value;
      if(codeName.length<2) {
      	return;
      }
+     readableName=codeToString(codeName);
      if(codeName==="clear all") {
      	 localStorage['history']='';
      } else {
-	 newString=readableName+" - "+asciiString.join(' ');
+	 newString=readableName+" - "+codeName;
 	 namesList.push(newString);
 	 localStorage['history'] = JSON.stringify(namesList);
      }
-     document.getElementById('fNew').value='';
-     asciiString.length=0;
-     asciiCode='';
-  }
-
-  // Handles input from the ascii entry field.
-  function submitenter(myfield, e) {
-     var keycode;
-     var p=document.getElementById('preview');
-     if (window.event) keycode = window.event.keyCode;
-     else if (e) keycode = e.which;
-     else return true;
-     if (keycode == 13) {
-        // Enter key submits the new name
-	addName();
-	listPreviousNames();
-	p.innerHTML='';
-        return false;
-     } else if (keycode == 8) {
-        // Backspace or delete
-	if(asciiCode.length==0) {
-	    // Remove the previous character from preview and
-	    //  the asciiString stack
-	    p.innerHTML=p.innerHTML.slice(0, -1);
-	    if(asciiString.length>0) {
-	        asciiCode=asciiString.pop().slice(0, -1);
-	    } else {
-	        asciiCode='';
-	    }
-	} else {
-	    // Remove the last character from an incomplete code
-	    asciiCode=asciiCode.slice(0, -1);
-	}
-     } else {
-        // Process ASCII values entered as decimal
-	asciiCode=asciiCode+String.fromCharCode(keycode);
-	var decValue=parseInt(asciiCode);
-	if (decValue>=32 && decValue <=122) {
-	    p.innerHTML=p.innerHTML + String.fromCharCode(decValue);
-	    asciiString.push(asciiCode);
-	    asciiCode='';
-	}
-     }
-     // DEBUGGING code
-     //document.getElementById('show').innerHTML=asciiCode;
-     return true;
+     document.getElementById('codeinput').value='';
   }
 
   // Loads a saved namesList array from HTML local storage. This
@@ -129,6 +83,58 @@ SOFTWARE.
       asciiCode='';
       loadNamesList();
       listPreviousNames();
+      console.log("ASCII app started up");
+  }
+
+  // Decode a string of ascii digits into a string
+  function codeToString(c) {
+      var decValue;
+      var outString='';
+      var charString='';
+      console.log(c);
+      console.log("Decoding string of len "+c.length);
+      for (var x=0; x < c.length; x++ ) {
+          charString = charString+c[x];
+	  decValue=parseInt(charString);
+	  // If a valid character code has been entered:
+	  if (decValue>=32 && decValue <=122) {
+	      outString=outString + String.fromCharCode(decValue);
+	      charString='';
+	  }
+      }
+      return outString;
+  }
+  function handleEnter(e) {
+      // Enter key submits the new name
+      console.log("Handling submit");
+      if (e.preventDefault) {
+	  e.preventDefault;
+      }
+      addName();
+      listPreviousNames();
+      document.getElementById('preview').value='';
+      return false;
+  }
+
+  // Handle the delete key which doesn't fire onkeypress except
+  //  in Firefox
+  function handleKeyDown(e) {
+      var keycode;
+      var p=document.getElementById('preview');
+      var i=document.getElementById('codeinput');
+
+      e = e || window.event;
+
+      if (e.keycode == 13) {
+	  return false;
+      } else {
+	  // Generate new preview from updated code input
+	  var p=document.getElementById('preview');
+	  var i=document.getElementById('codeinput');
+	  var incode=i.value;
+	  p.innerHTML=codeToString(incode);
+      }
+
   }
 
   </script>
@@ -140,6 +146,7 @@ SOFTWARE.
 <div id="histframe">
 <div class="marquee"><b>Who Learned ASCII Today?</b></div>
 <br/>
+<span id="debug"> </span>
 <div id="history">
 </div>
 </div><!-- histframe -->
@@ -159,19 +166,28 @@ ASCII version of your name using the number keypad.
 <!-- Place where kids enter their name -->
 <div id="entry">
 
-<form id="entryForm" action="#" method="post"
-  onkeypress="return submitenter(this, event)">
+<form id="entryForm" action="#" method="post" onsubmit="return handleEnter()">
 <b>Enter your name in ASCII:</b> <br/><br/>
-<input type="text" name="newName" id="fNew" size="40" />
+<input type="text" name="newName" id="codeinput" size="45" />
 <br/>
 <br/>
 </form>
+<!-- preview of the human-readable version -->
 <div id="preview">
 </div>
 <div id="show">
 </div>
 
 </div>
+<script>
+    document.getElementById('codeinput').oninput=handleKeyDown;
+    var form=document.getElementById('entryForm');
+    if (form.attachEvent) {
+    	form.attachEvent("submit", handleEnter);
+    } else {
+    	form.addEventListener("submit", handleEnter);
+    }
+</script>
 
 </div> <!-- container -->
 </body>
